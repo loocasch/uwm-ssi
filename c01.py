@@ -41,7 +41,7 @@ def getUniqueAtributes(lists):
     return tmpDictionary
 
 
-def getStandardDeviationForAttributes(lists):
+def getStandardDeviation(lists, type):
     tmpDictionary = {}
     for index, li in enumerate(lists, start=1):
         n = len(li)  # Obliczanie N
@@ -52,12 +52,24 @@ def getStandardDeviationForAttributes(lists):
 
         # Obliczanie sqrt((sum|x - u|^2) / N)
         xusquared = math.sqrt(xusquared/n)
-        tmpDictionary['atr. {}'.format(index)] = xusquared
+        if(type == 'atr'):
+            tmpDictionary['atr. {}'.format(index)] = xusquared
+        elif(type == 'class'):
+            tmpDictionary = xusquared
+
     return tmpDictionary
 
 
 def getStandardDeviationForClassDecisions(lists, classDecisions):
     tmpDictionary = {}
+    for classDecision in classDecisions:
+        tmpList = []
+        for li in lists:
+            if(classDecision == li[-1]):
+                tmpList.extend(li)
+        tmpDictionary['klasa decyzyjna {}'.format(
+            classDecision)] = tmpList
+    return tmpDictionary
 
 
 def getTransposeList(lists):
@@ -100,15 +112,19 @@ for item in sorted(uniqueAtributes):
 
 print("=============================================================")
 
-standardDeviationForAttributes = getStandardDeviationForAttributes(
-    getTransposeList(diabetes))
+standardDeviationForAttributes = getStandardDeviation(
+    getTransposeList(diabetes), 'atr')
 
 for item in sorted(standardDeviationForAttributes):
-    print("{} {}".format(item, standardDeviationForAttributes[item]))
+    print("{} odchylenie standardowe: {}".format(
+        item, standardDeviationForAttributes[item]))
 
 print("=============================================================")
 
 classDecisions = getClassDecision(diabetes)
 standardDeviationForClassDecisions = getStandardDeviationForClassDecisions(
     diabetes, classDecisions)
-# print(standardDeviationForClassDecisions)
+
+for standardDeviationForClassDecision in standardDeviationForClassDecisions:
+    print('{} odchylenie standardowe: {}'.format(standardDeviationForClassDecision, getStandardDeviation(
+        [standardDeviationForClassDecisions[standardDeviationForClassDecision]], 'class')))
