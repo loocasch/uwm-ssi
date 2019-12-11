@@ -70,7 +70,7 @@ for index1, count in enumerate(counts):
         else:
             decisions[count]['correct'] = False
 
-dec_bayes = open("dec_bayes.txt", "w+")
+dec_bayes = open("data/dec_bayes.txt", "w+")
 dec_bayes.write("Obiekt tst\t\tUkryta decyzja eksperta\t\tDecyzja naszego klasyfikatora\t\tPoprawnie?\n")
 dec_bayes.write("-------------------------------------------------------------------------------------------------------------\n")
 for index, decision in enumerate(decisions):
@@ -78,7 +78,7 @@ for index, decision in enumerate(decisions):
 dec_bayes.write("-------------------------------------------------------------------------------------------------------------\n")
 dec_bayes.close()
 
-acc_bayes = open("acc_bayes.txt", "w+")
+acc_bayes = open("data/acc_bayes.txt", "w+")
 acc_bayes.write('Global Accuracy: {}\n'.format(correctDecision / len(decisions)))
 acc_bayes.write('Balanced Accuracy: {}\n'.format(groupDecisions(decisions) / len(classDecisions)))
 acc_bayes.close()
