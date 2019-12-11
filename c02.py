@@ -70,11 +70,15 @@ for index1, count in enumerate(counts):
         else:
             decisions[count]['correct'] = False
 
-print("-------------------------------------------------------------------------------------------------------------")
-print("Obiekt tst\t\tUkryta decyzja eksperta\t\tDecyzja naszego klasyfikatora\t\tPoprawnie?")
-print("-------------------------------------------------------------------------------------------------------------")
+dec_bayes = open("dec_bayes.txt", "w+")
+dec_bayes.write("Obiekt tst\t\tUkryta decyzja eksperta\t\tDecyzja naszego klasyfikatora\t\tPoprawnie?\n")
+dec_bayes.write("-------------------------------------------------------------------------------------------------------------\n")
 for index, decision in enumerate(decisions):
-    print("%s\t\t\t\t%f\t\t\t\t%s\t\t\t%s" % (decision, australian_TST[index][-1], decisions[decision]['dec'], 'Tak' if decisions[decision]['correct'] else 'Nie'))
-print("-------------------------------------------------------------------------------------------------------------")
-print('Global Accuracy: {}'.format(correctDecision / len(decisions)))
-print('Balanced Accuracy: {}'.format(groupDecisions(decisions) / len(classDecisions)))
+    dec_bayes.write("%s\t\t\t\t%f\t\t\t\t%s\t\t\t%s\n" % (decision, australian_TST[index][-1], decisions[decision]['dec'], 'Tak' if decisions[decision]['correct'] else 'Nie'))
+dec_bayes.write("-------------------------------------------------------------------------------------------------------------\n")
+dec_bayes.close()
+
+acc_bayes = open("acc_bayes.txt", "w+")
+acc_bayes.write('Global Accuracy: {}\n'.format(correctDecision / len(decisions)))
+acc_bayes.write('Balanced Accuracy: {}\n'.format(groupDecisions(decisions) / len(classDecisions)))
+acc_bayes.close()
