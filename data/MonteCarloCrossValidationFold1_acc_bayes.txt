@@ -1,2 +1,0 @@
-Global Accuracy: 0.8347826086956521
-Balanced Accuracy: 0.8570675105485233
