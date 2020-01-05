@@ -53,6 +53,28 @@ def CrossValidation(lists, k):
     acc_bayes.close()
 
 
+def Bootstrap(lists):
+    tmpDictionary = {}
+    tmpList = []
+    tmpListIndex = []
+    lengthRowList = len(lists)
+    lengthColumnLists = len(lists[0])
+    for li in range(lengthRowList):
+        randomIndex = random.randrange(0, lengthRowList - 1)
+        tmpList.append(lists[randomIndex])
+        if randomIndex not in tmpListIndex:
+            tmpListIndex.append(randomIndex)
+    tmpDictionary['train'] = tmpList
+
+    tmpList = []
+
+    for li in range(lengthRowList):
+        if(li not in tmpListIndex):
+            tmpList.append(lists[li])
+    tmpDictionary['test'] = tmpList
+    return tmpDictionary
+
+
 data = importFile("data/australian.txt")
 
 TrainAndTestLists = TrainAndTest(data, 0.5)
@@ -61,3 +83,7 @@ getNaiveBayes(TrainAndTestLists['test'], TrainAndTestLists['train'], "TrainAndTe
 MonteCarloCrossValidation(data, 5, 0.5)
 
 CrossValidation(data, 5)
+CrossValidation(data, len(data))
+
+BootstrapLists = Bootstrap(data)
+getNaiveBayes(BootstrapLists['test'], BootstrapLists['train'], "Bootstrap", False)
