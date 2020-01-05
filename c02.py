@@ -19,7 +19,7 @@ def groupDecisions(decisions):
     return sumCorectDecision
 
 
-def getNaiveBayes(tst, train, nameFile):
+def getNaiveBayes(tst, train, nameFile, getGaccBacc):
     classDecisions = getClassDecisions(train)
     lengthClassDecisions = getLengthClassDecision(train, classDecisions)
     lengthRow = len(train)
@@ -81,8 +81,13 @@ def getNaiveBayes(tst, train, nameFile):
     acc_bayes.write('Balanced Accuracy: {}\n'.format(groupDecisions(decisions) / len(classDecisions)))
     acc_bayes.close()
 
+    if(getGaccBacc):
+        globalAccuracy = correctDecision / len(decisions)
+        balancedAccuracy = groupDecisions(decisions) / len(classDecisions)
+        return globalAccuracy, balancedAccuracy
+
 
 australian_TST = importFile("data/australian_TST.txt")
 australian_TRN = importFile("data/australian_TRN.txt")
 
-getNaiveBayes(australian_TST, australian_TRN, "c02")
+getNaiveBayes(australian_TST, australian_TRN, "c02", False)
