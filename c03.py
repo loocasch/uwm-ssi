@@ -75,6 +75,19 @@ def Bootstrap(lists):
     return tmpDictionary
 
 
+def Bagging(lists, numberFold):
+    sumGlobalAccuracy = 0
+    sumBalancedAccuracy = 0
+    for fold in range(numberFold):
+        naiveBayes = getNaiveBayes(Bootstrap(data)['test'], Bootstrap(data)['train'], "BaggingFold", True)
+        sumGlobalAccuracy += naiveBayes[0]
+        sumBalancedAccuracy += naiveBayes[1]
+    acc_bayes = open("data/BaggingAverage_acc_bayes.txt", "w+")
+    acc_bayes.write('Average Global Accuracy: {}\n'.format(sumGlobalAccuracy / numberFold))
+    acc_bayes.write('Average Balanced Accuracy: {}\n'.format(sumBalancedAccuracy / numberFold))
+    acc_bayes.close()
+
+
 data = importFile("data/australian.txt")
 
 TrainAndTestLists = TrainAndTest(data, 0.5)
@@ -87,3 +100,5 @@ CrossValidation(data, len(data))
 
 BootstrapLists = Bootstrap(data)
 getNaiveBayes(BootstrapLists['test'], BootstrapLists['train'], "Bootstrap", False)
+
+Bagging(data, 5)

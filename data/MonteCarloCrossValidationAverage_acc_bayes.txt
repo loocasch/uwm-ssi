@@ -1,2 +1,2 @@
-Average Global Accuracy: 0.7895652173913044
-Average Balanced Accuracy: 0.8363076211643274
+Average Global Accuracy: 0.813913043478261
+Average Balanced Accuracy: 0.8410581838069838
